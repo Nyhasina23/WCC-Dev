@@ -23,7 +23,7 @@ async function getUsers(createdObj ,username , location , page , order){
     if(createdObj.year){
         await axios.get(`https://api.github.com/search/users?q=${username}+in:login+created:${created}+location:${location}&sort=joined&per_page=20&page=${page}&order=${order}` , {
             headers : {
-                'Authorization' : 'Bearer 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'
+                'Authorization' : 'Bearer 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'
             }
         }).then((res) => {
     
@@ -35,7 +35,7 @@ async function getUsers(createdObj ,username , location , page , order){
     }else{
         await axios.get(`https://api.github.com/search/users?q=${username}+in:login+location:${location}&sort=joined&per_page=20&page=${page}&order=${order}` , {
         headers : {
-            'Authorization' : 'Bearer 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'
+            'Authorization' : 'Bearer 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'
         }
     }).then((res) => {
 
