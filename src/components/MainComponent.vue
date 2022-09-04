@@ -2,12 +2,7 @@
   <div class="hello">
     <div class="search-bar">
       <div class="select-country">
-        <select
-          id="country"
-          v-model="location"
-          @change="search()"
-          name="country"
-        >
+        <select id="country" v-model="location" @change="search()" name="country">
           <option value="">select country</option>
           <option value="Afghanistan">Afghanistan</option>
           <option value="Aland+Islands">Aland Islands</option>
@@ -26,25 +21,24 @@
           <option value="Austria">Austria</option>
           <option value="Azerbaijan">Azerbaijan</option>
           <option value="Bahamas">Bahamas</option>
-          <option value="BH">Bahrain</option>
-          <option value="BD">Bangladesh</option>
-          <option value="BB">Barbados</option>
-          <option value="BY">Belarus</option>
-          <option value="BE">Belgium</option>
-          <option value="BZ">Belize</option>
-          <option value="BJ">Benin</option>
-          <option value="BM">Bermuda</option>
-          <option value="BT">Bhutan</option>
-          <option value="BO">Bolivia</option>
-          <option value="BQ">Bonaire, Sint Eustatius and Saba</option>
-          <option value="BA">Bosnia and Herzegovina</option>
-          <option value="BW">Botswana</option>
-          <option value="BV">Bouvet Island</option>
-          <option value="BR">Brazil</option>
-          <option value="IO">British Indian Ocean Territory</option>
-          <option value="BN">Brunei Darussalam</option>
-          <option value="BG">Bulgaria</option>
-          <option value="BF">Burkina Faso</option>
+          <option value="Bahrain">Bahrain</option>
+          <option value="Bangladesh">Bangladesh</option>
+          <option value="Barbados">Barbados</option>
+          <option value="Belarus">Belarus</option>
+          <option value="Belgium">Belgium</option>
+          <option value="Belize">Belize</option>
+          <option value="Benin">Benin</option>
+          <option value="Bermuda">Bermuda</option>
+          <option value="Bhutan">Bhutan</option>
+          <option value="Bolivia">Bolivia</option>
+          <option value="Bonaire">Bonaire</option>
+          <option value="Bosnia">Bosnia</option>
+          <option value="Botswana">Botswana</option>
+          <option value="Bouvet">Bouvet</option>
+          <option value="Brazil">Brazil</option>
+          <option value="Brunei">Brunei Darussalam</option>
+          <option value="Bulgaria">Bulgaria</option>
+          <option value="Burkina">Burkina Faso</option>
           <option value="BI">Burundi</option>
           <option value="KH">Cambodia</option>
           <option value="CM">Cameroon</option>
@@ -266,43 +260,57 @@
         </select>
       </div>
       <div v-if="location" class="username-input">
-        <input
-          type="text"
-          v-model="username"
-          name="username"
-          id=""
-          placeholder="username..."
-        />
+        <input type="text" v-model="username" name="username" id="" placeholder="username..." />
       </div>
       <div v-if="location" class="search-btn" @click="search">
         <p>Recherche</p>
       </div>
     </div>
-    <p class="total">Total users : {{ total }}</p>
-    <div class="paginate">
-      <div v-if="page != 1" @click="firstPage">
+    <p v-if="users" class="total">Total users : {{ total }}</p>
+
+
+    <div v-if="users" class="paginate">
+      <div v-if="(order == 'asc' && page != lastPageNumber) || (order == 'desc' && page != 1)" @click="firstPage">
         <p>First</p>
       </div>
-      <div v-if="page != 1" @click="prevPage">
+      <div v-if="(order == 'asc' && page != lastPageNumber) || (order == 'desc' && page != 1)" @click="prevPage">
         <p>Prev</p>
       </div>
-      <div v-if="page != lastPageNumber" @click="nextPage">
+      <div v-if="(order == 'desc' && page != lastPageNumber) || (order == 'asc' && page != 1)" @click="nextPage">
         <p>Next</p>
       </div>
-      <div v-if="page != lastPageNumber" @click="lastPage">
+      <div v-if="(order == 'desc' && page != lastPageNumber) || (order == 'asc' && page != 1)" @click="lastPage">
         <p>Last</p>
       </div>
     </div>
-      <div class="user-list">
-        <div class="users" v-for="user in users" v-bind:key="user">
-          <a :href="user.html_url"> {{ user.login }} </a>
-          <img :src="user.avatar_url" />
+
+    <div class="duo">
+      <div class="yearList ">
+        <div v-for="year in yearList" v-bind:key="year.year" @click="yearfilter(year.year)"
+          :class="`${date == year.year ? 'active' : ''} `">
+          <p class="yea"><strong>{{ year.year }}</strong></p>
+          <p class="yearSigned">{{ year.count }} </p>
         </div>
+      </div>
+      <div v-if="order == 'desc'" class="user-list ">
+        <div class="users" v-for="user in users" v-bind:key="user">
+          <img :src="user.avatar_url" />
+          <a :href="user.html_url"> {{ user.login }} </a>
+        </div>
+      </div>
+      <div v-if="order == 'asc'" class="user-list  reverse">
+        <div class="users" v-for="user in users" v-bind:key="user">
+          <img :src="user.avatar_url" />
+          <a :href="user.html_url"> {{ user.login }} </a>
+        </div>
+      </div>
     </div>
-    
   </div>
-  <div v-if="isSearching" class="modal">
-    <p>Loading...</p>
+  <div v-if="isSearching" class="modalCont">
+
+    <div v-if="isSearching" class="modal">
+      <p>Loading...</p>
+    </div>
   </div>
   <div></div>
 </template>
@@ -316,11 +324,13 @@ export default {
     return {
       users: undefined,
       location: "",
-      date: {},
+      date: "",
       username: "",
       page: 1,
       isSearching: false,
       lastPageNumber: undefined,
+      order: 'desc',
+      yearList: []
     };
   },
 
@@ -331,17 +341,35 @@ export default {
       let location = this.location;
       let date = this.date;
       let page = this.page;
-
-      let total = await getUsers({}, username, location, page);
-     
+      if (!date) {
+        this.searchYear()
+      }
+      let total;
+      try {
+        total = await getUsers(date, username, location, page, this.order);
+      } catch {
+        if (total.error) {
+          alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
+          this.search()
+        }
+      }
       this.total = total.data.total_count;
-       this.lastPageNumber = this.total / 20;
-      if(this.total > 1000){
+      this.lastPageNumber = this.total / 20;
+      if (this.total > 1000) {
         this.lastPageNumber = 50
       }
-      let response = await getUsers(date, username, location, page);
+      let response
+      try {
+        response = await getUsers(date, username, location, page, this.order);
+      } catch {
+        if (response.error) {
+          alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
+          this.search()
+        }
+      }
       this.isSearching = false;
       this.users = response.data.items;
+
     },
 
     async firstPage() {
@@ -351,43 +379,139 @@ export default {
       let location = this.location;
       let date = this.date;
       let page = this.page;
-      let response = await getUsers(date, username, location, page);
+      this.order = 'desc';
+      let response = await getUsers(date, username, location, page, this.order);
+      if (response.error) {
+        alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
+      }
       this.isSearching = false;
       this.users = response.data.items;
     },
     async prevPage() {
-      this.isSearching = true;
-      this.page--;
-      let username = this.username;
-      let location = this.location;
-      let date = this.date;
-      let page = this.page;
-      let response = await getUsers(date, username, location, page);
-      this.isSearching = false;
-      this.users = response.data.items;
+      if (this.order == 'desc') {
+
+        this.isSearching = true;
+        this.page--;
+        let username = this.username;
+        let location = this.location;
+        let date = this.date;
+        let page = this.page;
+        let response
+        try {
+          response = await getUsers(date, username, location, page, this.order);
+        } catch {
+          if (response.error) {
+            alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
+            this.page++
+          }
+        }
+        this.isSearching = false;
+        this.users = response.data.items;
+      } else {
+        this.isSearching = true;
+        this.page++;
+        let username = this.username;
+        let location = this.location;
+        let date = this.date;
+        let page = this.page;
+        let response
+        try {
+          response = await getUsers(date, username, location, page, this.order);
+        } catch {
+          if (response.error) {
+            alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
+            this.page--
+          }
+        }
+        this.isSearching = false;
+        this.users = response.data.items;
+      }
     },
     async nextPage() {
-      this.isSearching = true;
-      this.page++;
-      let username = this.username;
-      let location = this.location;
-      let date = this.date;
-      let page = this.page;
-      let response = await getUsers(date, username, location, page);
-      this.isSearching = false;
-      this.users = response.data.items;
+      if (this.order == 'desc') {
+
+        this.isSearching = true;
+        this.page++;
+        let username = this.username;
+        let location = this.location;
+        let date = this.date;
+        let page = this.page;
+        let response
+        try {
+          response = await getUsers(date, username, location, page, this.order);
+        } catch {
+          if (response.error) {
+            alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
+            this.page--
+          }
+        }
+        this.isSearching = false;
+        this.users = response.data.items;
+      } else {
+        this.isSearching = true;
+        this.page--;
+        let username = this.username;
+        let location = this.location;
+        let date = this.date;
+        let page = this.page;
+        let response;
+        try {
+          response = await getUsers(date, username, location, page, this.order);
+        } catch {
+          if (response.error) {
+            alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
+            this.page++
+          }
+        }
+        this.isSearching = false;
+        this.users = response.data.items;
+      }
     },
     async lastPage() {
       this.isSearching = true;
-      this.page = this.lastPageNumber;
+      this.page = 1;
       let username = this.username;
       let location = this.location;
       let date = this.date;
       let page = this.page;
-      let response = await getUsers(date, username, location, page , 'desc');
+      this.order = 'asc'
+      let response
+      try {
+        response = await getUsers(date, username, location, page, this.order);
+      } catch {
+        if (response.error) {
+          alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
+        }
+      }
       this.isSearching = false;
       this.users = response.data.items;
     },
+    async searchYear() {
+
+      let username = this.username;
+      let location = this.location;
+      let page = this.page;
+      for (let index = 2008; index < 2023; index++) {
+        let response;
+        try {
+          response = await getUsers(index.toString(), username, location, page, this.order);
+          if (response.data.total_count > 0) {
+            let year = index.toString()
+            let count = response.data.total_count
+            this.yearList.push({ year, count })
+          }
+        } catch {
+          if (response.error) {
+            alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
+            index--
+          }
+        }
+      }
+    },
+    async yearfilter(date) {
+      this.date = date
+      this.search()
+    }
   },
 };
 </script>
@@ -403,38 +527,48 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
+
 .users {
   display: flex;
   align-items: center;
   height: 3rem;
-  margin:2rem;
-  width: 5rem;
+  margin: .5rem;
+  width: 300px;
 }
+
 .users a {
-  color:#C9D1D9;
+  color: #C9D1D9;
 }
+
 .users img {
   width: 2rem;
   height: 2rem;
   object-fit: cover;
   border-radius: 50%;
+  margin: .5rem;
 }
+
 .search-btn {
   color: white;
-  font-weight: 550;;
+  font-weight: 550;
+  ;
   background: #2EA043;
   padding: 0.8rem 0.8rem;
-  border-radius:0.5rem;
+  border-radius: 0.5rem;
   width: fit-content;
 }
+
 .search-bar {
   background: #161B22;
-  padding:1rem;
+  padding: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .modal {
+  z-index: 101;
+
   position: fixed;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -447,49 +581,125 @@ export default {
   align-items: center;
   border-radius: 0.5rem;
   background: #30363D;
-  color:#C9D1D9;
+  color: #C9D1D9;
 
 }
-.select-country select{
+
+.select-country select {
   background: #30363D;
-  border: 1px solid #8B949E ;
-  color:#C9D1D9;
+  border: 1px solid #8B949E;
+  color: #C9D1D9;
   font-weight: 600;
-  padding : 0.8rem;
-  margin-right:0.5rem;
-  border-radius:0.5rem;
+  padding: 0.8rem;
+  margin-right: 0.5rem;
+  border-radius: 0.5rem;
   width: fit-content;
-  }
+}
+
 .username-input input {
   background: #30363D;
-  border: 1px solid #8B949E ;
-  color:#C9D1D9;
-  margin-right:0.5rem;
-  padding : 0.8rem;
-  border-radius:0.5rem;
+  border: 1px solid #8B949E;
+  color: #C9D1D9;
+  margin-right: 0.5rem;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
 
 }
-.paginate{
+
+.paginate {
   display: flex;
   justify-content: center;
 }
-.paginate div{
+
+.paginate div {
   color: white;
-  font-weight: 550;;
+  font-weight: 550;
+  ;
   background: #2EA043;
   padding: 0.8rem 0.8rem;
-  border-radius:0.5rem;
+  border-radius: 0.5rem;
   width: fit-content;
-  margin:0.3rem;
+  margin: 0.3rem;
+  cursor: pointer;
 }
+
 .total {
-  margin:1rem;
+  margin: 1rem;
 }
-.user-list{
+
+.user-list {
   display: flex;
   flex-direction: column;
   align-items: center;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.user-list.reverse {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: column-reverse;
+}
+
+.yearList {
+  width: 200px;
+  margin-left: 4rem;
+}
+.modalCont{
+  position: fixed;
+  width: 100vw;
+  height: 100vw;
+  cursor: wait;
+  z-index: 100;
+  background: #161b2259;
+}
+.yearList div {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  background: #30363D;
+  padding: .5rem;
+  border-radius: .5rem;
+  width: 100%;
+  height: fit-content;
+  color: #C9D1D9;
+  margin: .25rem;
+}
+.yearList .yearSigned{
+  background-color: #6E7681;
+  color: #F1F6FF;
+  font-weight: bold;
+  
+  border-radius: 2rem;
+  padding: .3rem;
+  font-size: .8rem;
+}
+
+.yearList div:hover {
+  background: #161B22;
+  transition: ease all .3s;
+}
+
+.yearList div.active {
+  background: #2EA043;
+}
+
+.yearList div.active:hover {
+  background: #268337;
+}
+
+.yearList div p {
+  margin: .25rem;
+}
+
+.duo {
+  display: flex;
+  width: 100vw;
+  justify-content: center;
+  align-items: start;
 }
 </style>

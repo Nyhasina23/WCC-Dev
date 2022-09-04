@@ -1,63 +1,53 @@
 const axios = require('axios')
 
 
-async function getUsers(createdObj ,username , location , page , order){
-    let created = '';
-    if(createdObj.year){
-        created = createdObj.year
-        if(createdObj.month){
-            created = created+'-'+createdObj.month
-            if(createdObj.day){
-                created = created+'-'+createdObj.day
-            }
-        }
-    }
-
+async function getUsers(created ,username , location , page , order){
     if(!page) {
         page = 1 ;
     }
     let response = {
         status : 200 , 
-        data : undefined
+        data : undefined,
+        error:undefined
     };
-    if(createdObj.year){
+    if(created){
         await axios.get(`https://api.github.com/search/users?q=${username}+in:login+created:${created}+location:${location}&sort=joined&per_page=20&page=${page}&order=${order}` , {
             headers : {
-                'Authorization' : 'Bearer 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'
+                'Authorization' : 'Bearer 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'
             }
         }).then((res) => {
-    
             response.status = res.status
             response.data = res.data
         }).catch(error => {
-            response.status = error.response.status
+        response.error = error
         })
     }else{
         await axios.get(`https://api.github.com/search/users?q=${username}+in:login+location:${location}&sort=joined&per_page=20&page=${page}&order=${order}` , {
         headers : {
-            'Authorization' : 'Bearer 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'
+            'Authorization' : 'Bearer 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'
         }
     }).then((res) => {
-
+        console.log(res)
         response.status = res.status
         response.data = res.data
     }).catch(error => {
-        response.status = error.response.status
+        response.error = error
+
     })
     }
     
     return response;
 }
 
-export {getUsers}
-// console.log('running ')
-// async function test(){
+export { getUsers }
 
-//     for(let i=0; i<31; i++){
+//console.log('running ')
+// async function test(){
+//
+//    for(let i=0; i<1; i++){
 //         console.log(i);
-//         let res = await getUsers({year:'2022' , month : '05'} , 'ei' , 'france' , 1)
+//         let res = await getUsers({year:'2022' , month : '05'} , 'ei' , 'france' , 1,'desc')
 //         console.log(res.status);
 //     }
-// } 
+ //} 
 
-// test()
