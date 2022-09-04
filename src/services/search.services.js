@@ -12,9 +12,7 @@ async function getUsers(created ,username , location , page , order){
     };
     if(created){
         await axios.get(`https://api.github.com/search/users?q=${username}+in:login+created:${created}+location:${location}&sort=joined&per_page=20&page=${page}&order=${order}` , {
-            headers : {
-                'Authorization' : 'Bearer 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'
-            }
+            headers : {'Authorization' : 'Bearer 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'}
         }).then((res) => {
             response.status = res.status
             response.data = res.data
@@ -24,7 +22,7 @@ async function getUsers(created ,username , location , page , order){
     }else{
         await axios.get(`https://api.github.com/search/users?q=${username}+in:login+location:${location}&sort=joined&per_page=20&page=${page}&order=${order}` , {
         headers : {
-            'Authorization' : 'Bearer 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'
+            'Authorization' : 'Bearer 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'
         }
     }).then((res) => {
         console.log(res)
