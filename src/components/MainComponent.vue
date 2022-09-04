@@ -1,13 +1,9 @@
 <template>
   <div class="hello">
     <div class="search-bar">
-      <div :class="'select-country'   ` ${test == 1 ? 'active' : ''} ` ">
-        <select
-          id="country"
-          v-model="location"
-          @change="search()"
-          name="country"
-        >
+      <div class="select-country">
+        <select id="country" v-model="location" @change="search()" name="country">
+9
           <option value="">select country</option>
           <option value="Afghanistan">Afghanistan</option>
           <option value="Aland+Islands">Aland Islands</option>
@@ -25,123 +21,118 @@
           <option value="Australia">Australia</option>
           <option value="Austria">Austria</option>
           <option value="Azerbaijan">Azerbaijan</option>
-          <option value="Bahamas">Bahamas</option>
-          <option value="BH">Bahrain</option>
-          <option value="BD">Bangladesh</option>
-          <option value="BB">Barbados</option>
-          <option value="BY">Belarus</option>
-          <option value="BE">Belgium</option>
-          <option value="BZ">Belize</option>
-          <option value="BJ">Benin</option>
-          <option value="BM">Bermuda</option>
-          <option value="BT">Bhutan</option>
-          <option value="BO">Bolivia</option>
-          <option value="BQ">Bonaire, Sint Eustatius and Saba</option>
-          <option value="BA">Bosnia and Herzegovina</option>
-          <option value="BW">Botswana</option>
-          <option value="BV">Bouvet Island</option>
-          <option value="BR">Brazil</option>
-          <option value="IO">British Indian Ocean Territory</option>
-          <option value="BN">Brunei Darussalam</option>
-          <option value="BG">Bulgaria</option>
-          <option value="BF">Burkina Faso</option>
-          <option value="BI">Burundi</option>
-          <option value="KH">Cambodia</option>
-          <option value="CM">Cameroon</option>
-          <option value="CA">Canada</option>
-          <option value="CV">Cape Verde</option>
-          <option value="KY">Cayman Islands</option>
-          <option value="CF">Central African Republic</option>
-          <option value="TD">Chad</option>
-          <option value="CL">Chile</option>
-          <option value="CN">China</option>
-          <option value="CX">Christmas Island</option>
-          <option value="CC">Cocos (Keeling) Islands</option>
-          <option value="CO">Colombia</option>
-          <option value="KM">Comoros</option>
-          <option value="CG">Congo</option>
-          <option value="CD">Congo, Democratic Republic of the Congo</option>
-          <option value="CK">Cook Islands</option>
-          <option value="CR">Costa Rica</option>
-          <option value="CI">Cote D'Ivoire</option>
-          <option value="HR">Croatia</option>
-          <option value="CU">Cuba</option>
-          <option value="CW">Curacao</option>
-          <option value="CY">Cyprus</option>
-          <option value="CZ">Czech Republic</option>
-          <option value="DK">Denmark</option>
-          <option value="DJ">Djibouti</option>
-          <option value="DM">Dominica</option>
-          <option value="DO">Dominican Republic</option>
-          <option value="EC">Ecuador</option>
-          <option value="EG">Egypt</option>
-          <option value="SV">El Salvador</option>
-          <option value="GQ">Equatorial Guinea</option>
-          <option value="ER">Eritrea</option>
-          <option value="EE">Estonia</option>
-          <option value="ET">Ethiopia</option>
-          <option value="FK">Falkland Islands (Malvinas)</option>
-          <option value="FO">Faroe Islands</option>
-          <option value="FJ">Fiji</option>
-          <option value="FI">Finland</option>
-          <option value="FR">France</option>
-          <option value="GF">French Guiana</option>
-          <option value="PF">French Polynesia</option>
-          <option value="TF">French Southern Territories</option>
-          <option value="GA">Gabon</option>
-          <option value="GM">Gambia</option>
-          <option value="GE">Georgia</option>
-          <option value="DE">Germany</option>
-          <option value="GH">Ghana</option>
-          <option value="GI">Gibraltar</option>
-          <option value="GR">Greece</option>
-          <option value="GL">Greenland</option>
-          <option value="GD">Grenada</option>
-          <option value="GP">Guadeloupe</option>
-          <option value="GU">Guam</option>
-          <option value="GT">Guatemala</option>
-          <option value="GG">Guernsey</option>
-          <option value="GN">Guinea</option>
-          <option value="GW">Guinea-Bissau</option>
-          <option value="GY">Guyana</option>
-          <option value="HT">Haiti</option>
-          <option value="HM">Heard Island and Mcdonald Islands</option>
-          <option value="VA">Holy See (Vatican City State)</option>
-          <option value="HN">Honduras</option>
-          <option value="HK">Hong Kong</option>
-          <option value="HU">Hungary</option>
-          <option value="IS">Iceland</option>
-          <option value="IN">India</option>
-          <option value="ID">Indonesia</option>
-          <option value="IR">Iran, Islamic Republic of</option>
-          <option value="IQ">Iraq</option>
-          <option value="IE">Ireland</option>
-          <option value="IM">Isle of Man</option>
-          <option value="IL">Israel</option>
-          <option value="IT">Italy</option>
-          <option value="JM">Jamaica</option>
-          <option value="JP">Japan</option>
-          <option value="JE">Jersey</option>
-          <option value="JO">Jordan</option>
-          <option value="KZ">Kazakhstan</option>
-          <option value="KE">Kenya</option>
-          <option value="KI">Kiribati</option>
-          <option value="KP">Korea, Democratic People's Republic of</option>
-          <option value="KR">Korea, Republic of</option>
-          <option value="XK">Kosovo</option>
-          <option value="KW">Kuwait</option>
-          <option value="KG">Kyrgyzstan</option>
-          <option value="LA">Lao People's Democratic Republic</option>
-          <option value="LV">Latvia</option>
-          <option value="LB">Lebanon</option>
-          <option value="LS">Lesotho</option>
-          <option value="LR">Liberia</option>
-          <option value="LY">Libyan Arab Jamahiriya</option>
-          <option value="LI">Liechtenstein</option>
-          <option value="LT">Lithuania</option>
-          <option value="LU">Luxembourg</option>
-          <option value="MO">Macao</option>
-          <option value="MK">Macedonia, the Former Yugoslav Republic of</option>
+          <option value="Bahamas">Bahamas</option>   
+          <option value="Bahrain">Bahrain</option>
+          <option value="Bangladesh">Bangladesh</option>
+          <option value="Barbados">Barbados</option>
+          <option value="Belarus">Belarus</option>
+          <option value="Belgium">Belgium</option>
+          <option value="Belize">Belize</option>
+          <option value="Benin">Benin</option>
+          <option value="Bermuda">Bermuda</option>
+          <option value="Bhutan">Bhutan</option>
+          <option value="Bolivia">Bolivia</option>
+          <option value="Bonaire">Bonaire</option>
+          <option value="Bosnia">Bosnia</option>
+          <option value="Botswana">Botswana</option>
+          <option value="Bouvet">Bouvet</option>
+          <option value="Brazil">Brazil</option>
+          <option value="Brunei">Brunei Darussalam</option>
+          <option value="Bulgaria">Bulgaria</option>
+          <option value="Burkina">Burkina Faso</option>
+          <option value="Burundi">Burundi</option>
+          <option value="Cambodia">Cambodia</option>
+          <option value="Cameroon">Cameroon</option>
+          <option value="Canada">Canada</option>
+          <option value="Cape+Verde">Cape Verde</option>
+          <option value="Cayman">Cayman Islands</option>
+          <option value="Central+African+Republic">Central African Republic</option>
+          <option value="Chad">Chad</option>
+          <option value="Chile">Chile</option>
+          <option value="China">China</option>
+          <option value="Christmas">Christmas Island</option>
+          <option value="Cocos">Cocos (Keeling) Islands</option>
+          <option value="Colombia">Colombia</option>
+          <option value="Comoros">Comoros</option>
+          <option value="Congo">Congo</option>
+          <option value="Cook">Cook Islands</option>
+          <option value="Costa+Rica">Costa Rica</option>
+          <option value="Cote">Cote D'Ivoire</option>
+          <option value="Croatia">Croatia</option>
+          <option value="Cuba">Cuba</option>
+          <option value="Curacao">Curacao</option>
+          <option value="Cyprus">Cyprus</option>
+          <option value="Czech">Czech Republic</option>
+          <option value="Denmark">Denmark</option>
+          <option value="Djibouti">Djibouti</option>
+          <option value="Dominica">Dominican Republic</option>
+          <option value="Ecuador">Ecuador</option>
+          <option value="Egypt">Egypt</option>
+          <option value="Salvador">El Salvador</option>
+          <option value="Guinea">Equatorial Guinea</option>
+          <option value="Eritrea">Eritrea</option>
+          <option value="Estonia">Estonia</option>
+          <option value="Ethiopia">Ethiopia</option>
+          <option value="Falkland">Falkland Islands (Malvinas)</option>
+          <option value="Faroe">Faroe Islands</option>
+          <option value="Fiji">Fiji</option>
+          <option value="Finland">Finland</option>
+          <option value="France">France</option>
+          <option value="Guiana">French Guiana</option>
+          <option value="Polynesia">French Polynesia</option>
+          <option value="Gabon">Gabon</option>
+          <option value="Gambia">Gambia</option>
+          <option value="Georgia">Georgia</option>
+          <option value="Germany">Germany</option>
+          <option value="Ghana">Ghana</option>
+          <option value="Gibraltar">Gibraltar</option>
+          <option value="Greece">Greece</option>
+          <option value="Greenland">Greenland</option>
+          <option value="Grenada">Grenada</option>
+          <option value="Guadeloupe">Guadeloupe</option>
+          <option value="Guam">Guam</option>
+          <option value="Guatemala">Guatemala</option>
+          <option value="Guernsey">Guernsey</option>
+          <option value="Guinea">Guinea</option>
+          <option value="Bissau">Guinea-Bissau</option>
+          <option value="Guyana">Guyana</option>
+          <option value="Haiti">Haiti</option>
+          <option value="Vatican">Holy See (Vatican City State)</option>
+          <option value="Honduras">Honduras</option>
+          <option value="Kong">Hong Kong</option>
+          <option value="Hungary">Hungary</option>
+          <option value="Iceland">Iceland</option>
+          <option value="India">India</option>
+          <option value="Indonesia">Indonesia</option>
+          <option value="Iran">Iran, Islamic Republic of</option>
+          <option value="Iraq">Iraq</option>
+          <option value="Ireland">Ireland</option>
+          <option value="Man">Isle of Man</option>
+          <option value="Israel">Israel</option>
+          <option value="Italy">Italy</option>
+          <option value="Jamaica">Jamaica</option>
+          <option value="Japan">Japan</option>
+          <option value="Jersey">Jersey</option>
+          <option value="Jordan">Jordan</option>
+          <option value="Kazakhstan">Kazakhstan</option>
+          <option value="Kenya">Kenya</option>
+          <option value="Kiribati">Kiribati</option>
+          <option value="South+Korea">Korea, Democratic People's Republic of</option>
+          <option value="North+Korea">Korea, Republic of</option>
+          <option value="Kosovo">Kosovo</option>
+          <option value="Kuwait">Kuwait</option>
+          <option value="Kyrgyzstan">Kyrgyzstan</option>
+          <option value="Lao">Lao People's Democratic Republic</option>
+          <option value="Latvia">Latvia</option>
+          <option value="Lebanon">Lebanon</option>
+          <option value="Lesotho">Lesotho</option>
+          <option value="Liberia">Liberia</option>
+          <option value="Libyan">Libyan Arab Jamahiriya</option>
+          <option value="Liechtenstein">Liechtenstein</option>
+          <option value="Lithuania">Lithuania</option>
+          <option value="Luxembourg">Luxembourg</option>
+          <option value="Macao">Macao</option>
+          <option value="Macedonia">Macedonia, the Former Yugoslav Republic of</option>
           <option value="Madagascar">Madagascar</option>
           <option value="Malawi">Malawi</option>
           <option value="Malaysia">Malaysia</option>
@@ -264,43 +255,57 @@
         </select>
       </div>
       <div v-if="location" class="username-input">
-        <input
-          type="text"
-          v-model="username"
-          name="username"
-          id=""
-          placeholder="username..."
-        />
+        <input type="text" v-model="username" name="username" id="" placeholder="username..." />
       </div>
       <div v-if="location" class="search-btn" @click="search">
         <p>Recherche</p>
       </div>
     </div>
-    <p class="total">Total users : {{ total }}</p>
-    <div class="paginate">
-      <div v-if="page != 1" @click="firstPage">
+    <p v-if="users" class="total">Total users : {{ total }}</p>
+
+
+    <div v-if="users" class="paginate">
+      <div v-if="(order == 'asc' && page != lastPageNumber) || (order == 'desc' && page != 1)" @click="firstPage">
         <p>First</p>
       </div>
-      <div v-if="page != 1" @click="prevPage">
+      <div v-if="(order == 'asc' && page != lastPageNumber) || (order == 'desc' && page != 1)" @click="prevPage">
         <p>Prev</p>
       </div>
-      <div v-if="page != lastPageNumber" @click="nextPage">
+      <div v-if="(order == 'desc' && page != lastPageNumber) || (order == 'asc' && page != 1)" @click="nextPage">
         <p>Next</p>
       </div>
-      <div v-if="page != lastPageNumber" @click="lastPage">
+      <div v-if="(order == 'desc' && page != lastPageNumber) || (order == 'asc' && page != 1)" @click="lastPage">
         <p>Last</p>
       </div>
     </div>
-      <div class="user-list">
-        <div class="users" v-for="user in users" v-bind:key="user">
-          <a :href="user.html_url"> {{ user.login }} </a>
-          <img :src="user.avatar_url" />
+
+    <div class="duo">
+      <div class="yearList ">
+        <div v-for="year in yearList" v-bind:key="year.year" @click="yearfilter(year.year)"
+          :class="`${date == year.year ? 'active' : ''} `">
+          <p class="yea"><strong>{{ year.year }}</strong></p>
+          <p class="yearSigned">{{ year.count }} </p>
         </div>
+      </div>
+      <div v-if="order == 'desc'" class="user-list ">
+        <div class="users" v-for="user in users" v-bind:key="user">
+          <img :src="user.avatar_url" />
+          <a :href="user.html_url"> {{ user.login }} </a>
+        </div>
+      </div>
+      <div v-if="order == 'asc'" class="user-list  reverse">
+        <div class="users" v-for="user in users" v-bind:key="user">
+          <img :src="user.avatar_url" />
+          <a :href="user.html_url"> {{ user.login }} </a>
+        </div>
+      </div>
     </div>
-    
   </div>
-  <div v-if="isSearching" class="modal">
-    <p>Loading...</p>
+  <div v-if="isSearching" class="modalCont">
+
+    <div v-if="isSearching" class="modal">
+      <p>Loading...</p>
+    </div>
   </div>
   <div></div>
 </template>
@@ -314,11 +319,13 @@ export default {
     return {
       users: undefined,
       location: "",
-      date: {},
+      date: "",
       username: "",
       page: 1,
       isSearching: false,
       lastPageNumber: undefined,
+      order: 'desc',
+      yearList: []
     };
   },
 
@@ -329,17 +336,35 @@ export default {
       let location = this.location;
       let date = this.date;
       let page = this.page;
-
-      let total = await getUsers({}, username, location, page);
-     
+      if (!date) {
+        this.searchYear()
+      }
+      let total;
+      try {
+        total = await getUsers(date, username, location, page, this.order);
+      } catch {
+        if (total.error) {
+          alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
+          this.search()
+        }
+      }
       this.total = total.data.total_count;
-       this.lastPageNumber = this.total / 20;
-      if(this.total > 1000){
+      this.lastPageNumber = this.total / 20;
+      if (this.total > 1000) {
         this.lastPageNumber = 50
       }
-      let response = await getUsers(date, username, location, page);
+      let response
+      try {
+        response = await getUsers(date, username, location, page, this.order);
+      } catch {
+        if (response.error) {
+          alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
+          this.search()
+        }
+      }
       this.isSearching = false;
       this.users = response.data.items;
+
     },
 
     async firstPage() {
@@ -349,43 +374,139 @@ export default {
       let location = this.location;
       let date = this.date;
       let page = this.page;
-      let response = await getUsers(date, username, location, page);
+      this.order = 'desc';
+      let response = await getUsers(date, username, location, page, this.order);
+      if (response.error) {
+        alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
+      }
       this.isSearching = false;
       this.users = response.data.items;
     },
     async prevPage() {
-      this.isSearching = true;
-      this.page--;
-      let username = this.username;
-      let location = this.location;
-      let date = this.date;
-      let page = this.page;
-      let response = await getUsers(date, username, location, page);
-      this.isSearching = false;
-      this.users = response.data.items;
+      if (this.order == 'desc') {
+
+        this.isSearching = true;
+        this.page--;
+        let username = this.username;
+        let location = this.location;
+        let date = this.date;
+        let page = this.page;
+        let response
+        try {
+          response = await getUsers(date, username, location, page, this.order);
+        } catch {
+          if (response.error) {
+            alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
+            this.page++
+          }
+        }
+        this.isSearching = false;
+        this.users = response.data.items;
+      } else {
+        this.isSearching = true;
+        this.page++;
+        let username = this.username;
+        let location = this.location;
+        let date = this.date;
+        let page = this.page;
+        let response
+        try {
+          response = await getUsers(date, username, location, page, this.order);
+        } catch {
+          if (response.error) {
+            alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
+            this.page--
+          }
+        }
+        this.isSearching = false;
+        this.users = response.data.items;
+      }
     },
     async nextPage() {
-      this.isSearching = true;
-      this.page++;
-      let username = this.username;
-      let location = this.location;
-      let date = this.date;
-      let page = this.page;
-      let response = await getUsers(date, username, location, page);
-      this.isSearching = false;
-      this.users = response.data.items;
+      if (this.order == 'desc') {
+
+        this.isSearching = true;
+        this.page++;
+        let username = this.username;
+        let location = this.location;
+        let date = this.date;
+        let page = this.page;
+        let response
+        try {
+          response = await getUsers(date, username, location, page, this.order);
+        } catch {
+          if (response.error) {
+            alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
+            this.page--
+          }
+        }
+        this.isSearching = false;
+        this.users = response.data.items;
+      } else {
+        this.isSearching = true;
+        this.page--;
+        let username = this.username;
+        let location = this.location;
+        let date = this.date;
+        let page = this.page;
+        let response;
+        try {
+          response = await getUsers(date, username, location, page, this.order);
+        } catch {
+          if (response.error) {
+            alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
+            this.page++
+          }
+        }
+        this.isSearching = false;
+        this.users = response.data.items;
+      }
     },
     async lastPage() {
       this.isSearching = true;
-      this.page = this.lastPageNumber;
+      this.page = 1;
       let username = this.username;
       let location = this.location;
       let date = this.date;
       let page = this.page;
-      let response = await getUsers(date, username, location, page , 'desc');
+      this.order = 'asc'
+      let response
+      try {
+        response = await getUsers(date, username, location, page, this.order);
+      } catch {
+        if (response.error) {
+          alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
+        }
+      }
       this.isSearching = false;
       this.users = response.data.items;
     },
+    async searchYear() {
+
+      let username = this.username;
+      let location = this.location;
+      let page = this.page;
+      for (let index = 2008; index < 2023; index++) {
+        let response;
+        try {
+          response = await getUsers(index.toString(), username, location, page, this.order);
+          if (response.data.total_count > 0) {
+            let year = index.toString()
+            let count = response.data.total_count
+            this.yearList.push({ year, count })
+          }
+        } catch {
+          if (response.error) {
+            alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
+            index--
+          }
+        }
+      }
+    },
+    async yearfilter(date) {
+      this.date = date
+      this.search()
+    }
   },
 };
 </script>
@@ -401,38 +522,48 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
+
 .users {
   display: flex;
   align-items: center;
   height: 3rem;
-  margin:2rem;
-  width: 5rem;
+  margin: .5rem;
+  width: 300px;
 }
+
 .users a {
-  color:#C9D1D9;
+  color: #C9D1D9;
 }
+
 .users img {
   width: 2rem;
   height: 2rem;
   object-fit: cover;
   border-radius: 50%;
+  margin: .5rem;
 }
+
 .search-btn {
   color: white;
-  font-weight: 550;;
+  font-weight: 550;
+  ;
   background: #2EA043;
   padding: 0.8rem 0.8rem;
-  border-radius:0.5rem;
+  border-radius: 0.5rem;
   width: fit-content;
 }
+
 .search-bar {
   background: #161B22;
-  padding:1rem;
+  padding: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .modal {
+  z-index: 101;
+
   position: fixed;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -445,49 +576,125 @@ export default {
   align-items: center;
   border-radius: 0.5rem;
   background: #30363D;
-  color:#C9D1D9;
+  color: #C9D1D9;
 
 }
-.select-country select{
+
+.select-country select {
   background: #30363D;
-  border: 1px solid #8B949E ;
-  color:#C9D1D9;
+  border: 1px solid #8B949E;
+  color: #C9D1D9;
   font-weight: 600;
-  padding : 0.8rem;
-  margin-right:0.5rem;
-  border-radius:0.5rem;
+  padding: 0.8rem;
+  margin-right: 0.5rem;
+  border-radius: 0.5rem;
   width: fit-content;
-  }
+}
+
 .username-input input {
   background: #30363D;
-  border: 1px solid #8B949E ;
-  color:#C9D1D9;
-  margin-right:0.5rem;
-  padding : 0.8rem;
-  border-radius:0.5rem;
+  border: 1px solid #8B949E;
+  color: #C9D1D9;
+  margin-right: 0.5rem;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
 
 }
-.paginate{
+
+.paginate {
   display: flex;
   justify-content: center;
 }
-.paginate div{
+
+.paginate div {
   color: white;
-  font-weight: 550;;
+  font-weight: 550;
+  ;
   background: #2EA043;
   padding: 0.8rem 0.8rem;
-  border-radius:0.5rem;
+  border-radius: 0.5rem;
   width: fit-content;
-  margin:0.3rem;
+  margin: 0.3rem;
+  cursor: pointer;
 }
+
 .total {
-  margin:1rem;
+  margin: 1rem;
 }
-.user-list{
+
+.user-list {
   display: flex;
   flex-direction: column;
   align-items: center;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.user-list.reverse {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: column-reverse;
+}
+
+.yearList {
+  width: 200px;
+  margin-left: 4rem;
+}
+.modalCont{
+  position: fixed;
+  width: 100vw;
+  height: 100vw;
+  cursor: wait;
+  z-index: 100;
+  background: #161b2259;
+}
+.yearList div {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  background: #30363D;
+  padding: .5rem;
+  border-radius: .5rem;
+  width: 100%;
+  height: fit-content;
+  color: #C9D1D9;
+  margin: .25rem;
+}
+.yearList .yearSigned{
+  background-color: #6E7681;
+  color: #F1F6FF;
+  font-weight: bold;
+  
+  border-radius: 2rem;
+  padding: .3rem;
+  font-size: .8rem;
+}
+
+.yearList div:hover {
+  background: #161B22;
+  transition: ease all .3s;
+}
+
+.yearList div.active {
+  background: #2EA043;
+}
+
+.yearList div.active:hover {
+  background: #268337;
+}
+
+.yearList div p {
+  margin: .25rem;
+}
+
+.duo {
+  display: flex;
+  width: 100vw;
+  justify-content: center;
+  align-items: start;
 }
 </style>
