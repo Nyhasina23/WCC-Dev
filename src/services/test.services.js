@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 
-async function getUsers(token, created, username, location, page, order) {
+async function testUsers(created, username, location, page, order) {
     if (!page) {
         page = 1;
     }
@@ -11,10 +11,8 @@ async function getUsers(token, created, username, location, page, order) {
         error: undefined
     };
     if (created) {
-        console.log(localStorage.getItem('token'))
-
         await axios.get(`https://api.github.com/search/users?q=${username}+in:login+created:${created}+location:${location}&sort=joined&per_page=20&page=${page}&order=${order}`, {
-            headers: { 'Authorization': "Bearer " + localStorage.getItem('token') }
+            
         }).then((res) => {
             response.status = res.status
             response.data = res.data
@@ -22,10 +20,7 @@ async function getUsers(token, created, username, location, page, order) {
             response.error = error
         })
     } else {
-        console.log(localStorage.getItem('token'))
         await axios.get(`https://api.github.com/search/users?q=${username}+in:login+location:${location}&sort=joined&per_page=20&page=${page}&order=${order}`, {
-            headers: { 'Authorization': "Bearer " + localStorage.getItem('token') }
-
 
         }).then((res) => {
             console.log(res)
@@ -36,11 +31,11 @@ async function getUsers(token, created, username, location, page, order) {
 
         })
     }
-    console.log('res' , response)
+
     return response;
 }
 
-export { getUsers }
+export { testUsers }
 
 //console.log('running ')
 // async function test(){

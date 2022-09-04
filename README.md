@@ -1,24 +1,22 @@
 # wcc_week1
 
-## Project setup
+## Run with Docker
 ```
-yarn install
+docker build -t wcc .
 ```
-
-### Compiles and hot-reloads for development
 ```
-yarn serve
+docker run -tid -p 80:80 wcc
 ```
 
-### Compiles and minifies for production
+## Run with node js
 ```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
+npm install --global vue @vue/cli @vue/cli-service yarn
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```
+yarn
+```
+
+```
+yarn run serve
+```

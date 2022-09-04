@@ -3,7 +3,7 @@
     <div class="search-bar">
       <div class="select-country">
         <select id="country" v-model="location" @change="search()" name="country">
-9
+          9
           <option value="">select country</option>
           <option value="Afghanistan">Afghanistan</option>
           <option value="Aland+Islands">Aland Islands</option>
@@ -21,7 +21,7 @@
           <option value="Australia">Australia</option>
           <option value="Austria">Austria</option>
           <option value="Azerbaijan">Azerbaijan</option>
-          <option value="Bahamas">Bahamas</option>   
+          <option value="Bahamas">Bahamas</option>
           <option value="Bahrain">Bahrain</option>
           <option value="Bangladesh">Bangladesh</option>
           <option value="Barbados">Barbados</option>
@@ -325,11 +325,48 @@ export default {
       isSearching: false,
       lastPageNumber: undefined,
       order: 'desc',
-      yearList: []
+      yearList: [],
+      accessToken: ''
     };
   },
-
+  async mounted() {
+    if (!localStorage.getItem('token')) {
+      this.prompt()
+    }
+  },
   methods: {
+    async prompt() {
+
+      let username = this.username;
+      let date = this.date;
+      let page = this.page;
+      let total;
+
+      localStorage.removeItem('token')
+
+      try {
+        this.accessToken = prompt("Please enter a valid token", "");
+        localStorage.setItem('token', this.accessToken)
+
+        if (this.accessToken == '') {
+          
+          this.prompt()
+        }
+        total = await getUsers(this.accessToken, date, username, 'france', page, this.order);
+        if (total.error) {
+          console.log('total error');
+
+          this.prompt()
+        }else{
+          console.log('no error');
+        }
+      } catch {
+        localStorage.removeItem('token')
+        console.log('catch');
+
+        this.accessToken = prompt("Please enter a valid token", "");
+      }
+    },
     async search() {
       this.isSearching = true;
       let username = this.username;
@@ -341,7 +378,7 @@ export default {
       }
       let total;
       try {
-        total = await getUsers(date, username, location, page, this.order);
+        total = await getUsers(this.accessToken, date, username, location, page, this.order);
       } catch {
         if (total.error) {
           alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
@@ -355,7 +392,7 @@ export default {
       }
       let response
       try {
-        response = await getUsers(date, username, location, page, this.order);
+        response = await getUsers(this.accessToken, date, username, location, page, this.order);
       } catch {
         if (response.error) {
           alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
@@ -375,7 +412,7 @@ export default {
       let date = this.date;
       let page = this.page;
       this.order = 'desc';
-      let response = await getUsers(date, username, location, page, this.order);
+      let response = await getUsers(this.accessToken, date, username, location, page, this.order);
       if (response.error) {
         alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
       }
@@ -393,7 +430,7 @@ export default {
         let page = this.page;
         let response
         try {
-          response = await getUsers(date, username, location, page, this.order);
+          response = await getUsers(this.accessToken, date, username, location, page, this.order);
         } catch {
           if (response.error) {
             alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
@@ -411,7 +448,7 @@ export default {
         let page = this.page;
         let response
         try {
-          response = await getUsers(date, username, location, page, this.order);
+          response = await getUsers(this.accessToken, date, username, location, page, this.order);
         } catch {
           if (response.error) {
             alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
@@ -433,7 +470,7 @@ export default {
         let page = this.page;
         let response
         try {
-          response = await getUsers(date, username, location, page, this.order);
+          response = await getUsers(this.accessToken, date, username, location, page, this.order);
         } catch {
           if (response.error) {
             alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
@@ -451,7 +488,7 @@ export default {
         let page = this.page;
         let response;
         try {
-          response = await getUsers(date, username, location, page, this.order);
+          response = await getUsers(this.accessToken, date, username, location, page, this.order);
         } catch {
           if (response.error) {
             alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
@@ -472,7 +509,7 @@ export default {
       this.order = 'asc'
       let response
       try {
-        response = await getUsers(date, username, location, page, this.order);
+        response = await getUsers(this.accessToken, date, username, location, page, this.order);
       } catch {
         if (response.error) {
           alert('you are authenticated but you are limited to 30 requests per minute, please wait a bit before continuing')
@@ -489,7 +526,7 @@ export default {
       for (let index = 2008; index < 2023; index++) {
         let response;
         try {
-          response = await getUsers(index.toString(), username, location, page, this.order);
+          response = await getUsers(this.accessToken, index.toString(), username, location, page, this.order);
           if (response.data.total_count > 0) {
             let year = index.toString()
             let count = response.data.total_count
@@ -643,7 +680,8 @@ export default {
   width: 200px;
   margin-left: 4rem;
 }
-.modalCont{
+
+.modalCont {
   position: fixed;
   width: 100vw;
   height: 100vw;
@@ -651,6 +689,7 @@ export default {
   z-index: 100;
   background: #161b2259;
 }
+
 .yearList div {
   align-items: center;
   cursor: pointer;
@@ -664,11 +703,12 @@ export default {
   color: #C9D1D9;
   margin: .25rem;
 }
-.yearList .yearSigned{
+
+.yearList .yearSigned {
   background-color: #6E7681;
   color: #F1F6FF;
   font-weight: bold;
-  
+
   border-radius: 2rem;
   padding: .3rem;
   font-size: .8rem;
