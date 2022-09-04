@@ -265,7 +265,7 @@
           <option value="ZW">Zimbabwe</option>
         </select>
       </div>
-      <div v-if="location">
+      <div v-if="location" class="username-input">
         <input
           type="text"
           v-model="username"
@@ -278,7 +278,7 @@
         <p>Recherche</p>
       </div>
     </div>
-    <p>Total users : {{ total }}</p>
+    <p class="total">Total users : {{ total }}</p>
     <div class="paginate">
       <div v-if="page != 1" @click="firstPage">
         <p>First</p>
@@ -395,6 +395,7 @@ export default {
 .searching {
   cursor: wait !important;
 }
+
 * {
   margin: 0;
   padding: 0;
@@ -414,11 +415,15 @@ export default {
 }
 .search-btn {
   color: white;
-  background: rgb(0, 119, 255);
-  padding: 0.3rem;
+  font-weight: 550;;
+  background: #2EA043;
+  padding: 0.8rem 0.8rem;
+  border-radius:0.5rem;
   width: fit-content;
 }
 .search-bar {
+  background: #161B22;
+  padding:1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -428,13 +433,50 @@ export default {
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
-  width: 400px;
-  height: 200px;
+  width: 100px;
+  height: 50px;
   max-width: 90vw;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 0.5rem;
-  background: gray;
+  background: #30363D;
+  color:#C9D1D9;
+
+}
+.select-country select{
+  background: #30363D;
+  border: 1px solid #8B949E ;
+  color:#C9D1D9;
+  font-weight: 600;
+  padding : 0.8rem;
+  margin-right:0.5rem;
+  border-radius:0.5rem;
+  width: fit-content;
+  }
+.username-input input {
+  background: #30363D;
+  border: 1px solid #8B949E ;
+  color:#C9D1D9;
+  margin-right:0.5rem;
+  padding : 0.8rem;
+  border-radius:0.5rem;
+
+}
+.paginate{
+  display: flex;
+  justify-content: center;
+}
+.paginate div{
+  color: white;
+  font-weight: 550;;
+  background: #2EA043;
+  padding: 0.8rem 0.8rem;
+  border-radius:0.5rem;
+  width: fit-content;
+  margin:0.3rem;
+}
+.total {
+  margin:1rem;
 }
 </style>
