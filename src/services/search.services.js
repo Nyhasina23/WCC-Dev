@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 
-async function getUsers(createdObj ,username , location , page){
+async function getUsers(createdObj ,username , location , page , order){
     let created = '';
     if(createdObj.year){
         created = createdObj.year
@@ -21,9 +21,9 @@ async function getUsers(createdObj ,username , location , page){
         data : undefined
     };
     if(createdObj.year){
-        await axios.get(`https://api.github.com/search/users?q=${username}+in:login+created:${created}+location:${location}&sort=joined&per_page=20&page=${page}` , {
+        await axios.get(`https://api.github.com/search/users?q=${username}+in:login+created:${created}+location:${location}&sort=joined&per_page=20&page=${page}&order=${order}` , {
             headers : {
-                'Authorization' : 'Bearer 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'
+                'Authorization' : 'Bearer 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'
             }
         }).then((res) => {
     
@@ -33,9 +33,9 @@ async function getUsers(createdObj ,username , location , page){
             response.status = error.response.status
         })
     }else{
-        await axios.get(`https://api.github.com/search/users?q=${username}+in:login+location:${location}&sort=joined&per_page=20&page=${page}` , {
+        await axios.get(`https://api.github.com/search/users?q=${username}+in:login+location:${location}&sort=joined&per_page=20&page=${page}&order=${order}` , {
         headers : {
-            'Authorization' : 'Bearer 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'
+            'Authorization' : 'Bearer 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'
         }
     }).then((res) => {
 

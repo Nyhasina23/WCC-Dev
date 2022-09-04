@@ -293,10 +293,13 @@
         <p>Last</p>
       </div>
     </div>
-    <div class="users" v-for="user in users" v-bind:key="user">
-      <a :href="user.html_url"> {{ user.login }} </a>
-      <img :src="user.avatar_url" />
+      <div class="user-list">
+        <div class="users" v-for="user in users" v-bind:key="user">
+          <a :href="user.html_url"> {{ user.login }} </a>
+          <img :src="user.avatar_url" />
+        </div>
     </div>
+    
   </div>
   <div v-if="isSearching" class="modal">
     <p>Loading...</p>
@@ -377,12 +380,11 @@ export default {
     async lastPage() {
       this.isSearching = true;
       this.page = this.lastPageNumber;
-      alert(this.lastPageNumber)
       let username = this.username;
       let location = this.location;
       let date = this.date;
       let page = this.page;
-      let response = await getUsers(date, username, location, page);
+      let response = await getUsers(date, username, location, page , 'desc');
       this.isSearching = false;
       this.users = response.data.items;
     },
@@ -404,8 +406,12 @@ export default {
 .users {
   display: flex;
   align-items: center;
-  text-decoration: none;
   height: 3rem;
+  margin:2rem;
+  width: 5rem;
+}
+.users a {
+  color:#C9D1D9;
 }
 .users img {
   width: 2rem;
@@ -478,5 +484,12 @@ export default {
 }
 .total {
   margin:1rem;
+}
+.user-list{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 </style>
